@@ -1,0 +1,57 @@
+class Student:
+    def __init__(self, name):
+        self.name = name
+        self.grades = []
+
+    def add_grade(self, grade):
+        self.grades.append(grade)
+
+    def average_grade(self):
+        if len(self.grades) == 0:
+            return 0
+        return sum(self.grades) / len(self.grades)
+
+class GradeManager:
+    def __init__(self):
+        self.students = []
+
+    def add_student(self, name):
+        self.students.append(Student(name))
+
+    def add_grade_for_student(self, name, grade):
+        for student in self.students:
+            if student.name == name:
+                student.add_grade(grade)
+                return
+        print("Student not found!")
+
+    def get_average_grade_for_student(self, name):
+        for student in self.students:
+            if student.name == name:
+                return student.average_grade()
+        return -1
+
+    def display_students(self):
+        if not self.students:
+            print("No students added yet.")
+            return
+        print("Students and their average grades:")
+        for student in self.students:
+            print(f"{student.name}: {student.average_grade()}")
+
+# Example usage
+if __name__ == "__main__":
+    grade_manager = GradeManager()
+
+    # Adding students
+    grade_manager.add_student("Alice")
+    grade_manager.add_student("Bob")
+
+    # Adding grades for students
+    grade_manager.add_grade_for_student("Alice", 90)
+    grade_manager.add_grade_for_student("Alice", 85)
+    grade_manager.add_grade_for_student("Bob", 75)
+    grade_manager.add_grade_for_student("Bob", 80)
+
+    # Displaying average grades for students
+    grade_manager.display_students()
